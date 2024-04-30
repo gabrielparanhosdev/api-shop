@@ -1,12 +1,12 @@
 package products
 
 import (
-    "net/http"
+	"database/sql"
+	"net/http"
 	"strconv"
-	
-    "github.com/labstack/echo/v4"
-    // "eulabs/db"
-	"eulabs/products/types"
+
+	"github.com/labstack/echo/v4"
+	"eulabs/helpers"
 )
 
 func GetProduct() echo.HandlerFunc {
@@ -14,16 +14,17 @@ func GetProduct() echo.HandlerFunc {
 
 		id, err := strconv.Atoi(c.Param("id"))
         if err != nil {
-            return echo.NewHTTPError(http.StatusBadRequest, "ID inválido")
+            return echo.NewHTTPError(http.StatusBadRequest, "invalid Id")
         }
 
-        product := products.ProductResponse{
-			Id:          id,
-			Name:        "Produto qualquer",
-			Description: "Descrição do Produto qualquer",
-			Price:       29.99,
+        product, err := helpers.GetProductDB(id)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				return echo.NewHTTPError(http.StatusNotFound, "Product not found")
+			}
+			return echo.NewHTTPError(http.StatusInternalServerError, "Error select product")
 		}
-
-        return c.JSON(http.StatusOK, product)
+	
+		return c.JSON(http.StatusOK, product)
     }
 }
