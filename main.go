@@ -2,7 +2,7 @@ package main
 
 import (
     "github.com/labstack/echo/v4"
-    "eulabs/db"
+    "eulabs/common"
     "eulabs/products"
     
 )
