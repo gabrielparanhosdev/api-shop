@@ -18,7 +18,7 @@ func GetProduct() echo.HandlerFunc {
         }
 
         product, err := helpers.GetProductDB(id)
-		if err != nil {
+		if product == nil || err != nil {
 			if err == sql.ErrNoRows {
 				return echo.NewHTTPError(http.StatusNotFound, "Product not found")
 			}
