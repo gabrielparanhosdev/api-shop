@@ -16,6 +16,7 @@ func main() {
 
     // routes
     e.GET("/products/:id", products.GetProduct())
+    e.POST("/products", products.CreateProduct())
 
     e.Logger.Fatal(e.Start(":4000"))
 }
