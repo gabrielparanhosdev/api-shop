@@ -59,7 +59,7 @@ func InsertProduct(product *types.ProductRequest) (*types.ProductResponse, error
 
 func UpdateProductDB(id int, product *types.ProductRequest) (*types.ProductResponse, error) {
 
-	query := "UPDATE products SET name = ?, description = ?, price = ? WHERE _id = ?"
+	query := "UPDATE " + productsTable + " SET name = ?, description = ?, price = ? WHERE _id = ?"
 
     result, err := db.DB.Exec(query, product.Name, product.Description, product.Price, id)
     if err != nil {
@@ -84,4 +84,27 @@ func UpdateProductDB(id int, product *types.ProductRequest) (*types.ProductRespo
     }
 
     return updatedProduct, nil
+}
+
+func DeleteProductDB(id int) error {
+    query := "DELETE FROM " + productsTable + " WHERE _id = ?"
+
+    result, err := db.DB.Exec(query, id)
+    if err != nil {
+		log.Logger.Error(err)
+        return err
+    }
+
+    rowsAffected, err := result.RowsAffected()
+    if err != nil {
+		log.Logger.Error(err)
+        return err
+    }
+    if rowsAffected == 0 {
+		msg := "404"
+		log.Logger.Errorf(msg)
+        return fmt.Errorf(msg)
+    }
+
+    return nil
 }
