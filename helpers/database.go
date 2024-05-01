@@ -108,3 +108,27 @@ func DeleteProductDB(id int) error {
 
     return nil
 }
+
+func GetAllProducts() ([]*types.ProductResponse, error) {
+    query := "SELECT _id, name, description, price FROM " + productsTable
+
+    rows, err := db.DB.Query(query)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+
+    var products []*types.ProductResponse
+    for rows.Next() {
+        var product types.ProductResponse
+        if err := rows.Scan(&product.Id, &product.Name, &product.Description, &product.Price); err != nil {
+            return nil, err
+        }
+        products = append(products, &product)
+    }
+    if err := rows.Err(); err != nil {
+        return nil, err
+    }
+
+    return products, nil
+}
