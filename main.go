@@ -18,6 +18,7 @@ func main() {
     e.GET("/products/:id", products.GetProduct())
     e.POST("/products", products.CreateProduct())
     e.PUT("/products/:id", products.UpdateProduct())
+    e.DELETE("/products/:id", products.DeleteProduct())
 
     e.Logger.Fatal(e.Start(":4000"))
 }
