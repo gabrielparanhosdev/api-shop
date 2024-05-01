@@ -30,3 +30,8 @@ curl --location 'http://localhost:4000/products/1' \
     "price": 209.95
 }'
 ```
+
+#### delete product
+```
+curl --location --request DELETE 'http://localhost:4000/products/1'
+```
