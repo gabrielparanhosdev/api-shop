@@ -9,7 +9,7 @@ COPY . .
 
 RUN go build -o main .
 
-FROM alpine:edge
+FROM frolvlad/alpine-glibc
 
 COPY --from=builder /app/main /
 
