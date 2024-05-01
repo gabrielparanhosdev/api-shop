@@ -9,7 +9,7 @@ COPY . .
 
 RUN go build -o main .
 
-FROM gcr.io/distroless/base-debian10
+FROM alpine:edge
 
 COPY --from=builder /app/main /
 
