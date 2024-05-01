@@ -109,7 +109,7 @@ func DeleteProductDB(id int) error {
     return nil
 }
 
-func GetAllProducts() ([]*types.ProductResponse, error) {
+func GetAllProductsDB() ([]*types.ProductResponse, error) {
     query := "SELECT _id, name, description, price FROM " + productsTable
 
     rows, err := db.DB.Query(query)
