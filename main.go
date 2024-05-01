@@ -15,6 +15,7 @@ func main() {
     }
 
     // routes
+    e.GET("/products", products.GetAllProducts())
     e.GET("/products/:id", products.GetProduct())
     e.POST("/products", products.CreateProduct())
     e.PUT("/products/:id", products.UpdateProduct())
